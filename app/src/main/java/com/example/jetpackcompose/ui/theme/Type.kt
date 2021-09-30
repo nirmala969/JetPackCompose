@@ -2,18 +2,20 @@ package com.example.jetpackcompose.ui.theme
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import com.example.jetpackcompose.R
 
 // Set of Material typography styles to start with
-val Typography = Typography(
+/*val Typography = Typography(
         body1 = TextStyle(
                 fontFamily = FontFamily.Default,
                 fontWeight = FontWeight.Normal,
                 fontSize = 16.sp
         )
-        /* Other default text styles to override
+        *//* Other default text styles to override
     button = TextStyle(
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.W500,
@@ -24,5 +26,29 @@ val Typography = Typography(
         fontWeight = FontWeight.Normal,
         fontSize = 12.sp
     )
-    */
+    *//*
+)*/
+// Set of Material typography styles to start with
+val font= FontFamily(
+        Font(R.font.gothica1_black)
+)
+val Typography = Typography(
+        body1 = TextStyle(
+                color = AquaBlue,
+                fontFamily = font,
+                fontWeight = FontWeight.Normal,
+                fontSize = 14.sp
+        ),
+        h1 = TextStyle(
+                color = TextWhite,
+                fontFamily = font,
+                fontWeight = FontWeight.Bold,
+                fontSize = 22.sp
+        ),
+        h2 = TextStyle(
+                color = TextWhite,
+                fontFamily = font,
+                fontWeight = FontWeight.Bold,
+                fontSize = 18.sp
+        )
 )
