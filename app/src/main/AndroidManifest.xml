@@ -10,6 +10,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.JetPackCompose">
         <activity
+            android:name=".RecyclerviewActivity"
+            android:exported="true"
+            android:label="@string/title_activity_recyclerview"
+            android:theme="@style/Theme.JetPackCompose.NoActionBar" />
+        <activity
             android:name=".TabActivity"
             android:exported="true"
             android:label="@string/title_activity_tab"

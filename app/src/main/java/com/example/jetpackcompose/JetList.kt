@@ -1,11 +1,12 @@
 package com.example.jetpackcompose
 
+import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.expandVertically
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
@@ -20,31 +21,20 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun AddList(messages: List<MessageList>) {
-    var count by remember { mutableStateOf(0) }
-    LazyColumn(
-        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
-        modifier = Modifier.fillMaxWidth()
-    ) {
-        items(messages) { message ->
-            MessageRow(message,count)
-        }
-        /* messages.forEach { message ->
-             MessageRow(message)
-         }*/
-    }
+    MessageList(messages)
 }
-/*
-@Composable
-fun MessageList(messages: List<MessageList>) {
-    LazyColumn( contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)) {
-        items(messages) { message ->
-            MessageRow(message)
-        }
-    }
-}*/
 
 @Composable
-fun MessageRow(message: MessageList,count: Int) {
+fun MessageList(messages: List<MessageList>) {
+    LazyColumn(contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)) {
+        itemsIndexed(messages) { index, message ->
+            MessageRow(message, index)
+        }
+    }
+}
+
+@Composable
+fun MessageRow(message: MessageList, count: Int) {
     Card(
         shape = RoundedCornerShape(8.dp),
         backgroundColor = MaterialTheme.colors.surface,
@@ -53,40 +43,63 @@ fun MessageRow(message: MessageList,count: Int) {
             .fillMaxWidth()
     ) {
         SetData(
-            message=message,
-            count = count,
+            message = message,
+            count = count
         )
     }
 }
 
 @Composable
-fun SetData(message: MessageList,count: Int) {
+fun SetData(message: MessageList, count: Int) {
+    var isExpanded by remember { mutableStateOf(false) }
     Row(
         Modifier
-            .padding(5.dp)
             .fillMaxSize()
+            .clickable { isExpanded = !isExpanded }
     )
     {
         Column(
             Modifier
                 .padding(5.dp)
-                .weight(1f), verticalArrangement = Arrangement.SpaceBetween,
+                .weight(1f),
+            verticalArrangement = Arrangement.SpaceBetween,
             horizontalAlignment = Alignment.Start
         ) {
-            Text(text = message.author+count)
+            Text(text = message.author + count, modifier = Modifier.fillMaxWidth())
             Spacer(modifier = Modifier.padding(2.dp))
-            Text(text = message.body+count)
-        }
-        Row(
-            Modifier
-                .padding(5.dp)
-                .weight(1f), horizontalArrangement = Arrangement.End
-        ) {
-            Image(
-                painter = painterResource(R.drawable.ic_email),
-                contentDescription = null
+            Text(
+                text = message.body + count,
+                modifier = Modifier
+                    .padding(4.dp)
+                    .fillMaxWidth()
+                /*.background(surfaceColor)*/,
+                maxLines = if (isExpanded) Int.MAX_VALUE else 1,
+                style = MaterialTheme.typography.body2
             )
         }
+        //w(
+        //  Modifier
+        //      .padding(5.dp)
+        //      .weight(1f),
+        //  verticalAlignment = Alignment.CenterVertically,
+        //  horizontalArrangement = Arrangement.End
+        //{
+        //  Image(
+        //      painter = painterResource(R.drawable.ic_email),
+        //      contentDescription = null
+        //  )
+        //
+
+         Image(                                             
+             painter = painterResource(R.drawable.ic_email),
+             contentDescription = null  ,
+             modifier = Modifier.weight(1f)
+               
+         )
+
+
+
+
     }
 }
 
@@ -94,5 +107,5 @@ fun SetData(message: MessageList,count: Int) {
 @Preview(showBackground = true)
 @Composable
 fun displayView() {
-    MessageRow(message = MessageList("Android", "Testing"),1)
+    MessageRow(message = MessageList("Android", "Testing"), 1)
 }

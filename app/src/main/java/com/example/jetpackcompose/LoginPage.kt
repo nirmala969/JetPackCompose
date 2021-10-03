@@ -1,6 +1,8 @@
 package com.example.jetpackcompose
 
 import android.app.Activity
+import android.content.Context
+import android.content.Intent
 import android.widget.Toast
 import androidx.compose.animation.expandVertically
 import androidx.compose.foundation.BorderStroke
@@ -24,6 +26,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Black
 import androidx.compose.ui.graphics.Color.Companion.Green
 import androidx.compose.ui.graphics.Color.Companion.Yellow
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -44,7 +47,8 @@ import java.util.regex.Pattern
 fun LoginPage(activity:MainActivity) {
     Box(modifier = Modifier.fillMaxSize()) {
         BgCard()
-        MainPage(activity)
+        val context= LocalContext.current
+        MainPage(context)
     }
 
 }
@@ -87,7 +91,7 @@ fun BgCard() {
 }
 
 @Composable
-fun MainPage(activity: Activity) {
+fun MainPage(activity: Context) {
 
     Surface(
         color = Color.White, modifier = Modifier
@@ -174,6 +178,7 @@ fun MainPage(activity: Activity) {
             Button(
                 onClick = {
                     Toast.makeText(activity,validateData(email = emailState.value,password = password.value),Toast.LENGTH_SHORT).show()
+                    activity.startActivity(Intent(activity,RecyclerviewActivity::class.java))
                      },
                 shape = shapes.medium,
                 modifier = Modifier
